@@ -1,0 +1,14 @@
+# Banco de dados e arquivos sensíveis
+*.db
+__pycache__/
+*.pyc
+
+# Netlify
+netlify.toml
+
+# Node.js (se usar backend com Node)
+node_modules/
+
+# IDEs
+.vscode/
+.idea/
