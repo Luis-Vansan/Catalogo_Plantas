@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administração - Adicionar Planta</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    main {
+      max-width: 500px;
+      margin: 3rem auto;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    form label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+      color: #333;
+    }
+
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.9rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    #mensagem {
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🌿 Catálogo de Plantas</div>
+    <a href="index.html" class="admin-icon">🏠 Home</a>
+  </header>
+
+  <main>
+    <h2>Adicionar nova planta</h2>
+    <form id="form-adicionar">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required />
+
+      <label for="descricao">Descrição:</label>
+      <textarea id="descricao" name="descricao" rows="4" required></textarea>
+
+      <label for="quantidade">Quantidade:</label>
+      <input type="number" id="quantidade" name="quantidade" min="0" required />
+
+      <label for="localizacao">Localização:</label>
+      <input type="text" id="localizacao" name="localizacao" required />
+
+      <label for="tags">Tags (separadas por vírgula):</label>
+      <input type="text" id="tags" name="tags" />
+
+      <label for="imagem_url">URL da imagem:</label>
+      <input type="url" id="imagem_url" name="imagem_url" />
+
+      <button type="submit">Adicionar Planta</button>
+    </form>
+    <div id="mensagem"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Catálogo de Plantas - Luis Vansan</p>
+  </footer>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
