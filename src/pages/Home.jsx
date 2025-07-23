@@ -3,28 +3,28 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PlantCard from "../components/PlantCard";
 import { db } from "../services/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 
 export default function Home() {
   const [plants, setPlants] = useState([]);
   const [visibleCount, setVisibleCount] = useState(9);
 
   useEffect(() => {
-    const fetchPlants = async () => {
-      try {
-        const plantsCol = collection(db, "plantas");
-        const plantsSnapshot = await getDocs(plantsCol);
-        const plantsList = plantsSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setPlants(plantsList);
-      } catch (error) {
-        console.error("Erro ao buscar plantas:", error);
-      }
-    };
+    const plantsCol = collection(db, "plantas");
 
-    fetchPlants();
+    // Escuta em tempo real mudanças na coleção 'plantas'
+    const unsubscribe = onSnapshot(plantsCol, (snapshot) => {
+      const plantsList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setPlants(plantsList);
+    }, (error) => {
+      console.error("Erro ao buscar plantas em tempo real:", error);
+    });
+
+    // Cleanup: cancelar a escuta quando componente desmontar
+    return () => unsubscribe();
   }, []);
 
   const showMore = () => setVisibleCount(prev => prev + 9);
