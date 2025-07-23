@@ -3,21 +3,26 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PlantCard from "../components/PlantCard";
 
+// Import Firestore
+import { db } from "../services/firebase"; 
+import { collection, getDocs } from "firebase/firestore";
+
 export default function Home() {
   const [plants, setPlants] = useState([]);
   const [visibleCount, setVisibleCount] = useState(9);
 
   useEffect(() => {
-    const fakePlants = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      name: `Planta ${i + 1}`,
-      description:
-        `Esta é uma descrição detalhada da Planta ${i + 1}, com informações importantes sobre cuidados e características únicas.`,
-      image: "/assets/exemplo.jpg",
-      location: "Quintal",
-      tags: ["Sol", "Externa"],
-    }));
-    setPlants(fakePlants);
+    const fetchPlants = async () => {
+      const plantsCol = collection(db, "plantas");
+      const plantsSnapshot = await getDocs(plantsCol);
+      const plantsList = plantsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setPlants(plantsList);
+    };
+
+    fetchPlants();
   }, []);
 
   const showMore = () => setVisibleCount((prev) => prev + 9);
