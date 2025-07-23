@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PlantCard from "../components/PlantCard";
-
-// Import Firestore
-import { db } from "../services/firebase"; 
+import { db } from "../services/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
@@ -13,22 +11,26 @@ export default function Home() {
 
   useEffect(() => {
     const fetchPlants = async () => {
-      const plantsCol = collection(db, "plantas");
-      const plantsSnapshot = await getDocs(plantsCol);
-      const plantsList = plantsSnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setPlants(plantsList);
+      try {
+        const plantsCol = collection(db, "plantas");
+        const plantsSnapshot = await getDocs(plantsCol);
+        const plantsList = plantsSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setPlants(plantsList);
+      } catch (error) {
+        console.error("Erro ao buscar plantas:", error);
+      }
     };
 
     fetchPlants();
   }, []);
 
-  const showMore = () => setVisibleCount((prev) => prev + 9);
+  const showMore = () => setVisibleCount(prev => prev + 9);
 
   return (
-    <div className="flex flex-col min-h-screen bg-green-50">
+    <div className="flex flex-col min-h-screen bg-orange-50">
       <Header />
       <main className="flex-grow max-w-7xl mx-auto px-6 py-10">
         <h1 className="text-4xl font-extrabold text-center text-green-900 mb-10">
